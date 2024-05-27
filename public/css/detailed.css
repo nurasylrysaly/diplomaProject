@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,600;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --main-color: #40c0ff;
+    --main-bg: #efefef;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.shop-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+.shop-section > p {
+    text-align: center;
+}
+
+.shop-section > img {
+    width: 500px;
+}
+
+.shop-products-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+.img-responsive{
+    height: auto;
+    width: 550px;
+}
+
+.button {
+    background-color: var(--main-color);
+    color: white;
+    outline: none;
+    border: none;
+    padding: 7px 18px;
+    border-radius: 50px;
+}
+
+.button:hover {
+    background-color: black;
+}
+
+.button.active {
+    background-color: black;
+}
+
+@media (max-width: 515px) {
+    .shop-section > p {
+        font-size: 12px;
+    }
+}
+
+.message-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.message-section > h2 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1rem;
+}
+.message-section > p {
+    text-align: center;
+}
+
+
