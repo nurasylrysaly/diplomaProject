@@ -4,95 +4,103 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-          integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="css/map.css" />
     <link rel="stylesheet" href="css/layout.css" />
     <title>Map</title>
-    <style>
-        html,
-        body,
-        #container {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        #reset {
-            padding: 4px 10px;
-            background: #00a81f;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
-            border: none;
-            color: #fff;
-            font-size: 12px;
-            cursor: pointer;
-        }
-    </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
 
     <%- include("includes/navbar.ejs") %>
 
-    <div id="container"></div>
-        <script src="https://mapgl.2gis.com/api/js/v1"></script>
-        <script src="https://unpkg.com/@2gis/mapgl-directions@^2/dist/directions.js"></script>
-        <script>
-            const map = new mapgl.Map('container', {
-                center: [71.42222, 51.14722],
-                zoom: 13,
-                key: 'd593ed8d-ae13-43cd-85c2-4237a688cf02',
-            })
+    <div class="main-container">
+        <div id="map-container">
+            <div id="container" style="width: 100%; height: 100%;"></div>
+        </div>
+        <div id="route-info">
+            <div id="carouselExampleIndicators" class="carousel slide">
+                <div class="carousel-indicators" id="carousel-indicators">
+                    <!-- Indicators will be dynamically added -->
+                </div>
+                <div class="carousel-inner" id="carousel-inner">
+                    <!-- Carousel items will be dynamically added -->
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
-            const markers = [];
+    <%- include("includes/footer.ejs") %>
 
-            let firstPoint;
-            let secondPoint;
-            // A current selecting point
-            let selecting = 'a';
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <script src="https://unpkg.com/@2gis/mapgl-directions@^2/dist/directions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script>
+        const map = new mapgl.Map('container', {
+            center: [71.42222, 51.14722],
+            zoom: 13,
+            key: 'ec310ba8-50e5-4019-b2cf-5dd62b26f390',
+        });
 
-            const controlsHtml = `<button id="reset">Reset points</button> `;
-            new mapgl.Control(map, controlsHtml, {
-                position: 'topLeft',
-            });
-            const resetButton = document.getElementById('reset');
+        const markers = [];
 
-            resetButton.addEventListener('click', function() {
-                selecting = 'a';
-                firstPoint = undefined;
-                secondPoint = undefined;
-                directions.clear();
-            });
+        let firstPoint;
+        let secondPoint;
+        let selecting = 'a';
 
-            map.on('click', async (e) => {
-                const coords = e.lngLat;
+        const controlsHtml = `<button id="reset">Reset points</button> `;
+        new mapgl.Control(map, controlsHtml, {
+            position: 'topLeft',
+        });
 
-                if (selecting != 'end') {
-                    // Just to visualize selected points, before the route is done
-                    markers.push(
-                        new mapgl.Marker(map, {
-                            coordinates: coords,
-                            icon: 'https://docs.2gis.com/img/dotMarker.svg',
-                        }),
-                    );
-                }
+        const resetButton = document.getElementById('reset');
+        const carouselInner = document.getElementById('carousel-inner');
+        const carouselIndicators = document.getElementById('carousel-indicators');
 
-                if (selecting === 'a') {
-                    firstPoint = coords;
-                    selecting = 'b';
-                } else if (selecting === 'b') {
-                    secondPoint = coords;
-                    selecting = 'end';
-                }
+        resetButton.addEventListener('click', function() {
+            selecting = 'a';
+            firstPoint = undefined;
+            secondPoint = undefined;
+            carouselInner.innerHTML = '';
+            carouselIndicators.innerHTML = '';
+            markers.forEach(marker => marker.destroy());
+            markers.length = 0;
+        });
 
-                // If all points are selected — we can draw the route
-                if (firstPoint && secondPoint) {
-                    const url = 'https://routing.api.2gis.com/public_transport/2.0?key=d593ed8d-ae13-43cd-85c2-4237a688cf02';
-                    const data = {
-                    locale: "kz",
+        map.on('click', async (e) => {
+            const coords = e.lngLat;
+
+            if (selecting !== 'end') {
+                markers.push(
+                    new mapgl.Marker(map, {
+                        coordinates: coords,
+                        icon: 'https://docs.2gis.com/img/dotMarker.svg',
+                    }),
+                );
+            }
+
+            if (selecting === 'a') {
+                firstPoint = coords;
+                selecting = 'b';
+            } else if (selecting === 'b') {
+                secondPoint = coords;
+                selecting = 'end';
+            }
+
+            if (firstPoint && secondPoint) {
+                const url = 'https://routing.api.2gis.com/public_transport/2.0?key=ec310ba8-50e5-4019-b2cf-5dd62b26f390';
+                const data = {
+                    locale: "eng",
                     source: {
                         name: "Point A",
                         point: {
@@ -107,57 +115,89 @@
                             lon: secondPoint[0]
                         }
                     },
-                    transport: ["bus"]
+                    transport: ["bus", "tram"]
                 };
 
-                    try {
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        });
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
 
-                        if (!response.ok) {
+                    if (!response.ok) {
+                        if (response.status === 403) {
+                            throw new Error('API key is not valid or does not have the necessary permissions.');
+                        } else {
                             throw new Error('Network response was not ok');
                         }
-
-                        const jsonResponse = await response.json();
-                        console.log('Response:', jsonResponse);
-                    } catch (error) {
-                        console.error('There was a problem with the fetch operation:', error);
                     }
+
+                    const jsonResponse = await response.json();
+                    console.log('Response:', jsonResponse);
+                    displayRouteInfo(jsonResponse);
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error.message);
                 }
-            });
-        </script>
-        
-    <!-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const map = L.map('map').setView([51.169392, 71.449074], 12); // Center map on Astana
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        const socket = io();
-        const markers = {};
-
-        socket.on('busData', (data) => {
-            console.log('Bus Data:', data); // Log data to verify format
-            data.forEach(bus => {
-                const { id, lat, lon } = bus; // Ensure these keys match the actual data
-                if (!markers[id]) {
-                    markers[id] = L.marker([lat, lon]).addTo(map);
-                } else {
-                    markers[id].setLatLng([lat, lon]);
-                }
-            });
+            }
         });
-    </script> --> 
 
-<%- include("includes/footer.ejs") %>
+        function displayRouteInfo(routeData) {
+            let html = '';
+            let indicatorsHtml = '';
+            routeData.forEach((route, index) => {
+                indicatorsHtml += `<button type="button" style="width: 50px; height: 25px" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" class="${index === 0 ? 'active' : ''}" aria-current="true" aria-label="Slide ${index + 1}">${index + 1}</button>`;
+                html += `<div class="carousel-item ${index === 0 ? 'active' : ''}">
+                    <h5 style="margin-left: 35px">Route ${index + 1}</h5>
+                    <p><i>Total Walkway Distance:</i> ${route.total_walkway_distance}</p>
+                    <h6>Movements:</h6>
+                    <ul>`;
+                route.movements.forEach(movement => {
+                    const pointName = movement.waypoint ? movement.waypoint.name : 'N/A';
+                    const pointComment = movement.waypoint ? movement.waypoint.comment : 'N/A';
+                    const routes = movement.routes ? movement.routes.map(r => r.names.join(', ')).join(', ') : 'N/A';
+                    if (pointName === "Point A") {
+                        html += `<li>
+                            <p>Start: ${pointName}</p>
+                            <p>${movement.type} (${pointComment})</p>
+                        </li>`;
+                    } else if (pointName === "Point B") {
+                        html += `<li>
+                            <p>Finish: ${pointName}</p>
+                            <p>${movement.type} (${pointComment})</p>
+                        </li>`;
+                    } else {
+                        html += `<li>
+                            <p>Bus stop: ${pointName}</p>
+                            <p>${movement.type} (${pointComment})</p>
+                            <p>Buses: ${routes}</p>
+                        </li>`;
+                    }
+                });
+                html += '</ul></div>';
+            });
+            carouselInner.innerHTML = html;
+            carouselIndicators.innerHTML = indicatorsHtml;
+
+            // Add click event listeners to indicators
+            document.querySelectorAll('.carousel-indicators button').forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    $('#carouselExampleIndicators').carousel(index);
+                });
+            });
+        }
+
+        document.querySelector('.carousel-control-prev').addEventListener('click', () => {
+            $('#carouselExampleIndicators').carousel('prev');
+        });
+
+        document.querySelector('.carousel-control-next').addEventListener('click', () => {
+            $('#carouselExampleIndicators').carousel('next');
+        });
+
+    </script>
 
 </body>
 </html>

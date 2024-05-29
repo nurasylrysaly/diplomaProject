@@ -8,7 +8,7 @@
 }
 
 :root {
-    --main-color: #40c0ff;
+    --main-color: #0d9025;
     --main-bg: #efefef;
 }
 
@@ -168,4 +168,65 @@ body {
     .shop-section > p {
         font-size: 12px;
     }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 70px 0 0 0;
+    overflow: hidden;
+}
+.main-container {
+    padding: 0 100px; /* Left and right padding */
+    box-sizing: border-box;
+    height: calc(100vh - 150px); /* Adjust according to navbar and footer height */
+    display: flex;
+    gap: 20px; /* Space between map and route-info */
+}
+#map-container, #route-info {
+    height: calc(100% - 60px); /* Reduced height to fit carousel indicators */
+    overflow: hidden;
+}
+#map-container {
+    width: 70%; /* 70% width */
+}
+#route-info {
+    width: 30%; /* 30% width */
+    background: white;
+    margin: 30px;
+    padding: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+.carousel-control-prev,
+.carousel-control-next {
+    width: 30px;
+    height: 30px;
+    background-color: #035712;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+.carousel-indicators {
+    position: static;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+.carousel-indicators button {
+    width: 50px;
+    height: 25px;
+    border-radius: 5px;
+    background-color: #035712;
+    border: none;
+    color: white;
+}
+.carousel-indicators .active {
+    background-color: #6ebf4a;
 }
