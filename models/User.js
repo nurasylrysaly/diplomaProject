@@ -1,3 +1,5 @@
+require('dotenv').config(); // Подключите
+
 const mongoose = require("mongoose");
 const passportLocalMongoose = require('passport-local-mongoose');
 const passport = require('passport');

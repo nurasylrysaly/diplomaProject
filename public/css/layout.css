@@ -57,7 +57,17 @@ body {
 }
 
 .navbar-toggler {
-    color: #fff;
+    color: #fff; 
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-color: #fff;
+}
+
+.navbar-collapse {
+    background-color: #222; /* Цвет фона для свернутого меню */
+    z-index: 9999; /* Устанавливаем z-index, чтобы меню было сверху */
 }
 
 .footer-section {

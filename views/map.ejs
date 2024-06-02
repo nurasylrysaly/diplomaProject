@@ -19,7 +19,7 @@
             <div id="container" style="width: 100%; height: 100%;"></div>
         </div>
         <div id="route-info">
-            <div id="carouselExampleIndicators" class="carousel slide">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
                 <div class="carousel-indicators" id="carousel-indicators">
                     <!-- Indicators will be dynamically added -->
                 </div>
@@ -34,6 +34,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
+                <button id="save-route" class="btn btn-primary">Сохранить маршрут</button>
             </div>
         </div>
     </div>
@@ -54,9 +55,12 @@
 
         const markers = [];
 
+        let currIndex = 0;
         let firstPoint;
         let secondPoint;
         let selecting = 'a';
+        let currentRouteData = null;
+
 
         const controlsHtml = `<button id="reset">Reset points</button> `;
         new mapgl.Control(map, controlsHtml, {
@@ -64,6 +68,7 @@
         });
 
         const resetButton = document.getElementById('reset');
+        const saveRouteButton = document.getElementById('save-route');
         const carouselInner = document.getElementById('carousel-inner');
         const carouselIndicators = document.getElementById('carousel-indicators');
 
@@ -75,6 +80,38 @@
             carouselIndicators.innerHTML = '';
             markers.forEach(marker => marker.destroy());
             markers.length = 0;
+        });
+
+        saveRouteButton.addEventListener('click', function() {
+            if (!currentRouteData) {
+                console.error('currentRouteData is undefined');
+                return;
+            }
+            if (currIndex === undefined || !currentRouteData[currIndex]) {
+                console.error('currIndex is invalid or out of bounds:', currIndex);
+                return;
+            }
+            console.log('currentRouteData:', currentRouteData);
+            console.log('currentRouteData[currIndex]:', currentRouteData[currIndex]);
+            
+            fetch('/favorites/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    route: currentRouteData[currIndex]
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Маршрут сохранен в избранное');
+                } else {
+                    alert('Ошибка при сохранении маршрута');
+                }
+            }).catch(error => {
+                console.error('Ошибка:', error);
+                alert('Ошибка при сохранении маршрута');
+            });
         });
 
         map.on('click', async (e) => {
@@ -135,9 +172,12 @@
                         }
                     }
 
+                    
+
                     const jsonResponse = await response.json();
                     console.log('Response:', jsonResponse);
                     displayRouteInfo(jsonResponse);
+                    currentRouteData = jsonResponse;
                 } catch (error) {
                     console.error('There was a problem with the fetch operation:', error.message);
                 }
@@ -185,6 +225,7 @@
             document.querySelectorAll('.carousel-indicators button').forEach((indicator, index) => {
                 indicator.addEventListener('click', () => {
                     $('#carouselExampleIndicators').carousel(index);
+                    currIndex = index;
                 });
             });
         }

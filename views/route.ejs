@@ -8,19 +8,20 @@
           integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="../css/orders.css" />
-    <link rel="stylesheet" type="text/css" href="../css/layout.css" />
-    <title>Orders</title>
+    <link rel="stylesheet" type="text/css" href="/css/about.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <title>Route №<%= routeNumber %></title>
 </head>
 <body>
 
 <%- include("includes/navbar.ejs") %>
 
-<section class="shop-section">
-    <h2>Orders</h2>
+<section class="route-section" id="about-us">
+    <h1>Route <%= routeNumber %></h1>
 </section>
+<img class="routeImg" src="/img/route<%= routeNumber %>.jpg" alt="Full Screen Background" id="fullscreen-bg">
 
-<!--<%- include("includes/footer.ejs") %>-->
+<%- include("includes/footer.ejs") %>
 
 </body>
 </html>

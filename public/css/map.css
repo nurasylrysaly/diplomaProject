@@ -230,3 +230,6 @@ html, body {
 .carousel-indicators .active {
     background-color: #6ebf4a;
 }
+.carousel-indicators [data-bs-target] {
+    background-color:  #6ebf4a;
+}

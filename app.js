@@ -1,4 +1,4 @@
-require("dotenv").config();
+// app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
@@ -12,6 +12,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 const mapRoute = require('./routes/map');
+const favoriteRoutes = require('./routes/favoriteRoutes'); // Добавили импорт маршрутов
 
 const app = express();
 
@@ -39,11 +40,18 @@ app.use((req, res, next) => {
     next();
 });
 
+require('dotenv').config();
+
 const keys = require("./config/keys");
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI)
-    .then(() => console.log("MongoDB connected successfully"))
-    .catch((err) => console.log(err));
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch((err) => {
+    console.error('Error connecting to MongoDB', err);
+});
 
 app.use("/", require("./routes/root"));
 app.use("/about", require("./routes/about"));
@@ -54,18 +62,9 @@ app.use("/contact", require("./routes/contact"));
 app.use("/users", require("./routes/users"));
 app.use("/profile", require("./routes/profile"));
 app.use("/auth", require("./routes/auth"));
-app.use("/route15", require("./routes/route15"));
-app.use("/route18", require("./routes/route18"));
-app.use("/route26", require("./routes/route26"));
-app.use("/route28", require("./routes/route28"));
-app.use("/route35", require("./routes/route35"));
-app.use("/route46", require("./routes/route46"));
-app.use("/route54", require("./routes/route54"));
-app.use("/route56", require("./routes/route56"));
-app.use("/route60", require("./routes/route60"));
-app.use("/route70", require("./routes/route70"));
+app.use("/route", require("./routes/route"));
 
-app.use('/map', mapRoute);
+app.use('/favorites', favoriteRoutes); // Добавили использование маршрутов
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
