@@ -1,4 +1,3 @@
-// app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
@@ -8,13 +7,11 @@ const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const path = require("path");
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-
-const mapRoute = require('./routes/map');
-const favoriteRoutes = require('./routes/favoriteRoutes'); // Добавили импорт маршрутов
-
 const app = express();
+
+require('dotenv').config();
+
+const keys = require("./config/keys");
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,6 +30,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
@@ -40,11 +38,8 @@ app.use((req, res, next) => {
     next();
 });
 
-require('dotenv').config();
-
-const keys = require("./config/keys");
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -55,17 +50,15 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use("/", require("./routes/root"));
 app.use("/about", require("./routes/about"));
-app.use('/map', require("./routes/map"));
-app.use('/routesCharts', require("./routes/routesCharts")); // Ensure this matches the filename exactly
-app.use("/products", require("./routes/products"));
 app.use("/contact", require("./routes/contact"));
+
+app.use('/map', require("./routes/map"));
+app.use("/route", require("./routes/route"));
+app.use('/favorites', require("./routes/favoriteRoutes"));
+app.use("/news", require("./routes/news"));
+
 app.use("/users", require("./routes/users"));
 app.use("/profile", require("./routes/profile"));
 app.use("/auth", require("./routes/auth"));
-app.use("/route", require("./routes/route"));
-
-app.use('/favorites', favoriteRoutes); // Добавили использование маршрутов
-
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;

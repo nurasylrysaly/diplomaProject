@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+          integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="css/news.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <title>News</title>
+</head>
+<body>
+
+<%- include("includes/navbar.ejs") %>
+
+<section class="shop-section">
+    <h2>News</h2>
+    <p>Stay informed with the latest updates and news from BusInfoCentral. <br>  Whether it's service enhancements, route expansions, <br>  or new features, find it all here.
+    </p>
+    <br>
+
+    <div class="shop-products-container">
+        <label for="data" class="form-label"></label>
+        <div class="row">
+        <% if(Array.isArray(news)){%>
+            <%for(let i = 0; i < news.length; i++){%>
+                <div class="col-sm-4">
+                    <div class="thumb-wrapper">
+                        <div class="img-box">
+                            <img src="<%=news[i].productImg%>" class="img-responsive" alt="" />
+                        </div>
+                        <div class="thumb-content">
+                            <h4><%=news[i].name%></h4>
+                            <a href="/news/<%=news[i].id%>">
+                                <button class="button" type="button">More detail</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            <%}%>
+        <%}else{%>
+        <label for="data" class="form-label"> <%=product%></label>
+        <%}%>
+        </div>
+    </div>
+</section>
+
+<%- include("includes/footer.ejs") %>
+
+</body>
+</html>

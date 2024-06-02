@@ -72,14 +72,6 @@ body {
   }
 }
 
-.filter {
-  float: left;
-  color: black;
-  text-align: center;
-  margin: 2px;
-  display: none;
-}
-
 .show {
   display: block;
 }

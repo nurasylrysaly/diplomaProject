@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const productSchema = new Schema({
+const newsSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -11,13 +11,9 @@ const productSchema = new Schema({
         type: String,
         default: ''
     },
-    gender: {
-        type: String,
-        default: ''
-    },
     productImg: {
         type: String
     }
 });
 
-module.exports =  mongoose.model("Products", productSchema)
+module.exports =  mongoose.model("News", newsSchema)

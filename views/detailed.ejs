@@ -10,7 +10,7 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="../css/detailed.css" />
     <link rel="stylesheet" href="../css/layout.css" />
-    <title>SNEAKSHOP</title>
+    <title>More Details</title>
 </head>
 <body>
 
@@ -22,22 +22,14 @@
         <div class="row">
             <div class="col">
                 <div class="img-box">
-                    <img src="<%=product.productImg%>" class="img-responsive" alt="" />
+                    <img src="<%=news.productImg%>" class="img-responsive" alt="" />
                 </div>
             </div>
             <div class="col">
                 <div class="thumb-wrapper">
                     <div class="message-section">
-                        <h2><%=product.name%></h2>
-                        <p><%=product.description%><%=product.description%></p>
-                        <p class="item-price"><strike><%=product.price * 1.8%>$</strike> <b><%=product.price%>$</b></p>
-                        <form action="/cart" method="post">
-                            <input type="hidden" name="productId" value="<%=product._id%>">
-                            <input type="hidden" name="name" value="<%=product.name%>">
-                            <input type="hidden" name="gender" value="<%=product.gender%>">
-                            <input type="hidden" name="productImg" value="<%=product.productImg%>">
-                            <button class="button" type="submit">Add to Cart</button>
-                        </form>
+                        <h2><%=news.name%></h2>
+                        <p><%=news.description%></p>
                     </div>
                 </div>
             </div>
