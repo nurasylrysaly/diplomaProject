@@ -10,13 +10,25 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+
     <title>Bus Info Central</title>
 </head>
 <body>
 
     <%- include("includes/navbar.ejs") %>
 
-    <header class="hero-section">
+    <section class="hero-section">
+        <div class="hero-section-content">
+            <div class="container text-center text-white">
+                <h1 class="display-4">Welcome to BusInfoCentral</h1>
+                <p class="lead">Your comprehensive source for public transport information</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <header class="second-section">
         <div class="hero-text-container">
             <h3>All information about Public Transport </h3>
             <p>Discover comprehensive bus information with BusInfo. Whether you're commuting to work or exploring a new city, we provide accurate and reliable transit details to make your journey seamless.</p>
@@ -28,21 +40,20 @@
 
     <section class="featured-product-section" id="featured-products">
         <h2>News</h2>
-        <div class="featured-container">
+        <div class="shop-products-container">
             <div class="row">
                 <% if(Array.isArray(mydata)){ %>
-                    <% for(let a = mydata.length - 1; a >= mydata.length - 3; a--){ %>
-                        <div class="col-sm-4">
-                            <div class="filter <%=mydata[a].gender%>">
-                                <div class="thumb-wrapper">
-                                    <span class="wish-icon"><i class="fa fa-heart-o"></i></span>
-                                    <div class="img-box">
-                                        <img src="<%=mydata[a].productImg%>" class="img-responsive" alt="" />
-                                    </div>
-                                    <div class="thumb-content">
-                                        <h4><%=mydata[a].name%></h4>
-                                        <a href="/news"><button class="button">More news</button></a>
-                                    </div>
+                    <% for(let i = mydata.length - 1; i >= mydata.length - 3; i--){ %>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumb-wrapper">
+                                <div class="img-box">
+                                    <img src="<%=mydata[i].productImg%>" class="img-responsive" alt="" />
+                                </div>
+                                <div class="thumb-content">
+                                    <h4><%=mydata[i].name%></h4>
+                                    <a href="/news/<%=mydata[i].id%>">
+                                        <button class="button" type="button">More detail</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

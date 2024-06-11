@@ -1,16 +1,21 @@
 body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    padding-top: 40px;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 64px !important;
+    background-color: #EAECEE;
 }
 
 .routes {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+}
+
+.container {
+    margin-top: 50px;
 }
 
 .route-card {
-    background: #fff;
+    background: white;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -18,17 +23,19 @@ body {
     text-align: center;
     margin: 20px; /* Increased margin for better spacing */
     transition: transform 0.3s ease;
-    width: 100%; /* Ensure the card takes the full width of the column */
+    text-decoration: none; /* Ensure no underline */
+    color: inherit; /* Ensure link color is inherited */
 }
 
 .route-card:hover {
     transform: translateY(-5px);
+    text-decoration: none; /* Ensure no underline on hover */
 }
 
 .route-number {
     font-size: 36px; /* Increased font size */
     font-weight: bold;
-    color: #0d9025;
+    color: #009970;
     margin-bottom: 20px; /* Increased margin for better spacing */
 }
 
@@ -36,14 +43,4 @@ body {
     font-size: 20px; /* Increased font size */
     color: #333;
     text-decoration: none; /* Ensure no underline */
-}
-
-.route-card a {
-    text-decoration: none; /* Ensure no underline */
-    color: inherit; /* Ensure link color is inherited */
-}
-
-.route-card a:hover {
-    text-decoration: none; /* Ensure no underline on hover */
-    color: inherit; /* Ensure link color is inherited on hover */
 }

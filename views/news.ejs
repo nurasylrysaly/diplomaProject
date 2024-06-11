@@ -10,6 +10,8 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="css/news.css" />
     <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+
     <title>News</title>
 </head>
 <body>
@@ -27,7 +29,7 @@
         <div class="row">
         <% if(Array.isArray(news)){%>
             <%for(let i = 0; i < news.length; i++){%>
-                <div class="col-sm-4">
+                <div class="col-sm-6 col-md-4">
                     <div class="thumb-wrapper">
                         <div class="img-box">
                             <img src="<%=news[i].productImg%>" class="img-responsive" alt="" />

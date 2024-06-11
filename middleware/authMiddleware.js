@@ -8,18 +8,18 @@ const requireAuth = (req, res, next) => {
         jwt.verify(token, process.env.SECRET, async (err, decodedToken) => {
             if (err) {
                 console.log(err);
-                next();
+                res.status(401).json({ message: 'Unauthorized' });
             } else {
                 console.log(decodedToken);
-                req.user = await UserModel.findOne({email: decodedToken.email}).exec();
+                req.user = await UserModel.findOne({ email: decodedToken.email }).exec();
                 next();
             }
         });
-    } else if (googleToken){
+    } else if (googleToken) {
         next();
     } else {
-        res.redirect('/auth/login');
+        res.status(401).json({ message: 'Unauthorized' });
     }
-}
+};
 
-module.exports = {requireAuth};
+module.exports = { requireAuth };

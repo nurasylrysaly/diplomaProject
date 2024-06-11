@@ -1,3 +1,4 @@
+// app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
@@ -16,7 +17,7 @@ const keys = require("./config/keys");
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('views', path.join(__dirname, 'views'));
@@ -59,6 +60,6 @@ app.use("/news", require("./routes/news"));
 
 app.use("/users", require("./routes/users"));
 app.use("/profile", require("./routes/profile"));
-app.use("/auth", require("./routes/auth"));
+app.use("/auth", require("./routes/auth")); // Include the new authentication route
 
 module.exports = app;

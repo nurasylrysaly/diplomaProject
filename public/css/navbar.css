@@ -1,0 +1,89 @@
+.navbar {
+      background-color: #fff;
+      height: 80px;
+      margin: 20px;
+      border-radius: 16px;
+      padding: 0.5rem;
+
+    }
+
+    .navbar-brand {
+      font-weight: 500;
+      color: #009970;
+      font-size: 24px;
+      transition: 0.3s color;
+    }
+
+    .login-button {
+      background-color: #009970;
+      color: #fff;
+      font-size: 14px;
+      padding: 8px 20px;
+      margin-right: 8px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: 0.3s background-color;
+    }
+
+    .nav-link-profile {
+      text-decoration: none;
+      padding: 0px 8px;
+    }
+
+    .login-button:hover {
+      background-color: #00b383;
+       color: #fff;
+    }
+
+    .navbar-toggler {
+      border: none;
+      font-size: 1.25rem;
+    }
+
+    .navbar-toggler:focus,
+    .btn-close:focus {
+      box-shadow: none;
+      outline: none;
+    }
+
+    .nav-link {
+      color: #4a4a55;
+      font-weight: 500;
+      margin-right: 7px;
+    }
+
+    .nav-link:hover,
+    .nav-link:active {
+      color: #000;
+    }
+
+    @media (min-width: 991px) {
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px; /* Adjusted height for a thinner line */
+    background-color: #009970;
+    visibility: hidden;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:active::before {
+    width: 100%;
+    visibility: visible;
+  }
+}
+
+.hero-section::before {
+  background-color: rgba(51, 49, 49, 0.6);
+  content: "";
+
+} 

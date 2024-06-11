@@ -10,26 +10,84 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="../css/detailed.css" />
     <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+
     <title>More Details</title>
+    <style>
+        .shop-section {
+            padding: 60px 0;
+            background-color: #EAECEE;
+        }
+        
+        .shop-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: #333;
+        }
+        
+        .shop-products-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .img-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .thumb-wrapper {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
+        }
+        
+        .thumb-wrapper h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #009970;
+        }
+        
+        .thumb-wrapper p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #555;
+            text-align: start;
+        }
+
+        @media (max-width: 768px) {
+            .thumb-wrapper {
+                margin-top: 20px;
+                margin-left: 0;
+            }
+            
+            .shop-products-container {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <%- include("includes/navbar.ejs") %>
 
 <section class="shop-section">
-    <h2>More detailed information</h2>
+    <h2>More Detailed Information</h2>
     <div class="shop-products-container">
         <div class="row">
-            <div class="col">
+            <div class="">
                 <div class="img-box">
-                    <img src="<%=news.productImg%>" class="img-responsive" alt="" />
-                </div>
-            </div>
-            <div class="col">
-                <div class="thumb-wrapper">
-                    <div class="message-section">
-                        <h2><%=news.name%></h2>
-                        <p><%=news.description%></p>
+                    <div class="thumb-wrapper">
+                        <img src="<%=news.productImg%>" class="img-responsive" alt="Product Image" />
+                        <div class="message-section">
+                            <h2><%=news.name%></h2>
+                            <p><%=news.description%></p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,22 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,600;1,800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 :root {
-    --main-color: #0d9025;
-    --main-bg: #efefef;
+    --main-color: #009970;
+    --main-bg: #EAECEE;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .about-us-section {
     display: flex;
-    background-color: #efefef;
+    padding-top: 90px;
+    background: linear-gradient(to right, #e2e2e2, #e3f8ef);
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -47,7 +46,7 @@ body {
     transition: all 0.25s ease;
     border-radius: 5%;
     margin: 1rem 1rem 3rem;
-    background-color: #f8f8f8;
+    background-color: #fff;
 }
 .service > i {
     font-size: 2rem;
@@ -92,7 +91,7 @@ body {
     opacity: 0.5;
 }
 .our-brands-section {
-    background-color: #efefef;
+    background: linear-gradient(to right, #e2e2e2, #e3f8ef);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -136,7 +135,7 @@ body {
 
 .route-section {
     display: flex;
-    background-color: #cccccc;
+    background-color: #EAECEE;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;

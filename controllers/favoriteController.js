@@ -3,7 +3,7 @@ const FavoriteRoute = require('../models/FavoriteRoute');
 
 module.exports.addFavoriteRoute = async function (req, res) {
     const { route } = req.body;
-    console.log(route)
+    console.log(route);
     try {
         const newFavorite = new FavoriteRoute({ user: req.user._id, route: route });
         await newFavorite.save();

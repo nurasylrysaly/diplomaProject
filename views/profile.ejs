@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-          integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="css/profile.css" />
     <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+
     <title>Profile</title>
 </head>
 <body>
@@ -26,18 +26,18 @@
                     <div class="row about-list">
                         <div class="col-md-6">
                             <div class="media">
-                                <label>Name: </label>
-                                <p><%=user.firstName%></p>
+                                <label>Name:</label>
+                                <p><%= user.firstName %></p>
                             </div>
                             <div class="media">
-                                <label>Surname: </label>
-                                <p><%=user.lastName%></p>
+                                <label>Surname:</label>
+                                <p><%= user.lastName %></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
-                                <label>E-mail</label>
-                                <p><%=user.email%></p>
+                                <label>E-mail:</label>
+                                <p><%= user.email %></p>
                             </div>
                         </div>
                     </div>
@@ -45,15 +45,85 @@
             </div>
             <div class="col-lg-6">
                 <div class="about-avatar">
-                    <img class="imgProf" src="img/bus_2.png"><br>
+                    <img class="imgProf" src="img/bus_2.png" alt="Profile Image"><br>
                     <a href="/profile/edit"><button type="button" class="btn">Edit</button></a>
+                    <button type="button" class="btn" id="toggle-routes">Saved routes</button>
                 </div>
             </div>
+        </div>
+        <div class="row favorite-routes" id="favorite-routes">
+            <% if (Array.isArray(favoriteRoutes) && favoriteRoutes.length) { %>
+                <h4>Favorite Routes</h4>
+                <div id="favoriteRoutesCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <% favoriteRoutes.forEach((favorite, index) => { %>
+                            <% if (index % 4 === 0) { %>
+                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                    <div class="container-route d-flex justify-content-around">
+                            <% } %>
+                                        <div class="favorite-route col-lg-3">
+                                            <p><i>Total Walkway Distance:</i> on foot <%= favorite.route.total_walkway_distance %></p>
+                                            <h6>Movements:</h6>
+                                            <ul>
+                                                <% favorite.route.movements.forEach(movement => { %>
+                                                    <% if (movement.waypoint.name === "Point A") { %>
+                                                        <li>
+                                                            <p>Start: <%= movement.waypoint.name %></p>
+                                                            <p><%= movement.type %> (<%= movement.waypoint.comment %>)</p>
+                                                        </li>
+                                                    <% } else if (movement.waypoint.name === "Point B") { %>
+                                                        <li>
+                                                            <p>Finish: <%= movement.waypoint.name %></p>
+                                                            <p><%= movement.type %> (<%= movement.waypoint.comment %>)</p>
+                                                        </li>
+                                                    <% } else { %>
+                                                        <li>
+                                                            <p>Bus stop: <%= movement.waypoint.name %></p>
+                                                            <p><%= movement.type %> (<%= movement.waypoint.comment %>)</p>
+                                                            <% if (movement.routes) { %>
+                                                                <p>Buses: <%= movement.routes.map(r => r.names.join(', ')).join(', ') %></p>
+                                                            <% } else { %>
+                                                                <p>Buses: N/A</p>
+                                                            <% } %>
+                                                        </li>
+                                                    <% } %>
+                                                <% }); %>
+                                            </ul>
+                                        </div>
+                            <% if ((index + 1) % 4 === 0 || index === favoriteRoutes.length - 1) { %>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% }); %>
+                    </div>
+                    <a class="carousel-control-prev" href="#favoriteRoutesCarousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#favoriteRoutesCarousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                </div>
+            <% } else { %>
+                <div class="col-12">
+                    <p>No favorite routes added yet.</p>
+                </div>
+            <% } %>
         </div>
     </div>
 </section>
 
 <%- include("includes/footer.ejs") %>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
+<script>
+    document.getElementById('toggle-routes').addEventListener('click', function() {
+        const favoriteRoutes = document.getElementById('favorite-routes');
+        favoriteRoutes.style.display = favoriteRoutes.style.display === 'block' ? 'none' : 'block';
+    });
+</script>
 
 </body>
 </html>
